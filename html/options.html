@@ -1,0 +1,31 @@
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/option.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/options.js"></script>
+    <title>設定 - ニコニコ動画 自動スクロール</title>
+</head>
+
+<body>
+    <div id="Main">
+        <h1>ニコニコ動画 自動スクロール</h1>
+        スクロールする位置：
+        <select id="tag">
+            <option value=".TagContainer">タグ（デフォルト）</option>
+            <option value=".VideoMetaContainer">動画情報</option>
+            <option value=".MarqueeContainer">ニュース</option>
+            <option value=".VideoPlayer">動画</option>
+        </select>
+
+        <br>
+
+        <input type="button" id="save" value="保存">
+
+        <div id="status"></div>
+    </div>
+</body>
+
+</html>
