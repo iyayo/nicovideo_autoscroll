@@ -18,14 +18,14 @@
   },
   "content_scripts": [
     {
-      "js": ["js/jquery.min.js", "js/script.js"],
+      "js": ["js/script.js"],
       "matches": ["https://www.nicovideo.jp/watch/*"],
       "all_frames": true,
       "run_at": "document_end"
     }
   ],
   "background": {
-    "scripts": ["js/jquery.min.js", "js/background.js"],
+    "scripts": ["js/background.js"],
     "persistent": false
   },
   "permissions": [

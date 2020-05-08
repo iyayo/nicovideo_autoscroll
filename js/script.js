@@ -1,38 +1,51 @@
 let old_title = " ";
 
-function scroll(tag) {
-    let offset, header_size, top;
-    offset = $(tag).offset();
-    // "px"という文字を除去して数字のみにする
-    header_size = $("#siteHeaderInner").css("height").slice(0, -2);
-    top = offset.top;
+window.onload = function () {
+    getLocalStorageOption()
+    .then((value) => {
+        windowScroll(value);
+    })
+};
 
-    $(window).scrollTop(top - header_size);
-}
-
-function sync() {
-    // setIntervalで定義する間隔
-    const interval = 1000;
-    const jsInitCheckTimer = setInterval(jsLoaded, interval);
-    // ページ移動時、null以外で異なる動画タイトルが見つかるまでループする
-    function jsLoaded() {
-        // 動画タイトルでサイトが切り替わったかを識別する
-        let target = document.querySelector('.VideoTitle').textContent;
-        if (target != null && target != old_title) {
-            clearInterval(jsInitCheckTimer);
-            old_title = target;
-            getLocalStorageOption().then(function (value) {
-                scroll(value);
-            });
-        }
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message == "access") {
+        scanVideoTitle()
+        .then(() => {
+            return getLocalStorageOption();
+        })
+        .then((value) => {
+            windowScroll(value);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    } else if (request.message == "click") {
+       getLocalStorageOption()
+       .then((value) => {
+           windowScroll(value);
+       });
     }
-}
+    return true
+});
 
+function scanVideoTitle() {
+    return new Promise ((resolve, reject) => {
+        const jsInitCheckTimer = setInterval(jsLoaded, 1000);
+        function jsLoaded() {
+            let target = document.querySelector('.VideoTitle');
+            if (target != null && target.textContent != old_title) {
+                clearInterval(jsInitCheckTimer);
+                old_title = target;
+                resolve();
+            }
+        }
+    });
+}
 
 function getLocalStorageOption() {
-    return new Promise(function (resolve, reject) {
-        chrome.storage.local.get(['nvas_tag'], function (value) {
-            if (value.nvas_tag !== undefined){
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(['nvas_tag'], (value) => {
+            if (value.nvas_tag !== undefined) {
                 resolve(value.nvas_tag);
             } else {
                 resolve(".TagContainer");
@@ -41,20 +54,11 @@ function getLocalStorageOption() {
     });
 }
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.message == "access") {
-        sendResponse({ farewell: "goodbye" });
-        sync();
-    } else if (request.message == "click") {
-        sendResponse({ farewell: "goodbye" });
-        getLocalStorageOption().then(function (value) {
-            scroll(value);
-        });
-    }
-});
+function windowScroll(tag) {
+    let rect = document.querySelector(tag).getBoundingClientRect(),
+        header = document.querySelector('#siteHeaderInner'),
+        header_size = window.getComputedStyle(header, null).getPropertyValue('height').slice(0, -2),
+        position = rect.top - header_size;
 
-$(window).on('load', function () {
-    getLocalStorageOption().then(function (value) {
-        scroll(value);
-    });
-});
+    window.scrollBy(0, position);
+}
