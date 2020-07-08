@@ -3,7 +3,7 @@ let old_title = " ";
 window.onload = function () {
     getLocalStorageOption()
     .then((value) => {
-        windowScroll(value);
+        windowScroll(value.nvas_tag, value.nvas_header);
     })
 };
 
@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             return getLocalStorageOption();
         })
         .then((value) => {
-            windowScroll(value);
+            windowScroll(value.nvas_tag, value.nvas_header);
         })
         .catch((error) => {
             console.log(error);
@@ -22,10 +22,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.message == "click") {
        getLocalStorageOption()
        .then((value) => {
-           windowScroll(value);
+           windowScroll(value.nvas_tag, value.nvas_header);
        });
     }
-    return true
+    return true;
 });
 
 function scanVideoTitle() {
@@ -44,21 +44,24 @@ function scanVideoTitle() {
 
 function getLocalStorageOption() {
     return new Promise((resolve, reject) => {
-        chrome.storage.local.get(['nvas_tag'], (value) => {
+        chrome.storage.local.get(['nvas_tag', 'nvas_header'], (value) => {
             if (value.nvas_tag !== undefined) {
-                resolve(value.nvas_tag);
+                resolve(value);
             } else {
-                resolve(".TagContainer");
+                resolve({'nvas_tag': '.TagContainer', 'nvas_header': true});
             }
         });
     });
 }
 
-function windowScroll(tag) {
-    let rect = document.querySelector(tag).getBoundingClientRect(),
-        header = document.querySelector('#CommonHeader'),
-        header_size = window.getComputedStyle(header, null).getPropertyValue('height').slice(0, -2),
+function windowScroll(tag, header_option) {
+    let rect = document.querySelector(tag).getBoundingClientRect();
+    let position = rect.top;
+    if (header_option == true){
+        let header = document.querySelector('#CommonHeader');
+        let header_size = window.getComputedStyle(header, null).getPropertyValue('height').slice(0, -2);
         position = rect.top - header_size;
+    }
 
     window.scrollBy(0, position);
 }

@@ -6,27 +6,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
 function save_option() {
-    let value = document.getElementById('tag').value;
-    chrome.storage.local.set({ "nvas_tag": value }, () => {
-        let status = document.getElementById('status');
-        status.innerText = "保存しました";
-        setTimeout(function () {
-            status.innerText = " ";
-        }, 1500);
-    });
+    let tag = document.getElementById('tag').value;
+    let header_option = document.getElementById('header_option').checked;
+    chrome.storage.local.set({ "nvas_tag": tag }, () => {
+        chrome.storage.local.set({ "nvas_header": header_option }, () => {
+            let status = document.getElementById('status');
+            status.innerText = "保存しました";
+            setTimeout(function () {
+                status.innerText = " ";
+            }, 1500);
+        });
+    });   
 }
 
 function restore_option() {
-    chrome.storage.local.get("nvas_tag", (local_storage) => {
-        const tag = local_storage.nvas_tag;
-        if (tag !== undefined) {
+    chrome.storage.local.get(["nvas_tag", "nvas_header"], (value) => {
+        let checkbox = document.getElementById('header_option');
+        if (value.nvas_tag !== undefined) {
             const option_list = document.querySelectorAll('option');
             option_list.forEach((option) => {
                 if (tag === option.value){
                     option.selected = true;
                 }
             });
+        }
+        
+        if (value.nvas_header !== undefined) {
+            checkbox.checked = value.nvas_header;
+        } else {
+            checkbox.checked = true;
         }
     });
 }
