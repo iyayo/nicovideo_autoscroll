@@ -56,7 +56,7 @@ function getLocalStorageOption() {
 
 function windowScroll(tag) {
     let rect = document.querySelector(tag).getBoundingClientRect(),
-        header = document.querySelector('#siteHeaderInner'),
+        header = document.querySelector('#CommonHeader'),
         header_size = window.getComputedStyle(header, null).getPropertyValue('height').slice(0, -2),
         position = rect.top - header_size;
 
