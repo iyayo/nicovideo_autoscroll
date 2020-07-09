@@ -27,7 +27,7 @@ function restore_option() {
         if (value.nvas_tag !== undefined) {
             const option_list = document.querySelectorAll('option');
             option_list.forEach((option) => {
-                if (tag === option.value){
+                if (value.nvas_tag === option.value){
                     option.selected = true;
                 }
             });
