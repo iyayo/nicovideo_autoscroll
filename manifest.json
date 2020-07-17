@@ -30,7 +30,7 @@
   },
   "permissions": [
     "storage",
-    "tabs",
+    "activeTab",
     "webNavigation"
   ],
   "options_ui": {
