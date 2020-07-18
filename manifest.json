@@ -29,9 +29,7 @@
     "persistent": false
   },
   "permissions": [
-    "storage",
-    "activeTab",
-    "webNavigation"
+    "storage"
   ],
   "options_ui": {
     "page": "html/options.html",

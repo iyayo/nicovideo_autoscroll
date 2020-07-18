@@ -1,18 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     restore_option();
-    const save_button = document.getElementById('save');
-    save_button.addEventListener('click', () => {
+    const save_button = document.getElementById("save");
+    save_button.addEventListener("click", () => {
         save_option();
     });
 });
 
 
 function save_option() {
-    let tag = document.getElementById('tag').value;
-    let header_option = document.getElementById('header_option').checked;
+    let tag = document.getElementById("tag").value;
+    let header_option = document.getElementById("header_option").checked;
     chrome.storage.local.set({ "nvas_tag": tag }, () => {
         chrome.storage.local.set({ "nvas_header": header_option }, () => {
-            let status = document.getElementById('status');
+            let status = document.getElementById("status");
             status.innerText = "保存しました";
             setTimeout(function () {
                 status.innerText = " ";
@@ -23,9 +23,9 @@ function save_option() {
 
 function restore_option() {
     chrome.storage.local.get(["nvas_tag", "nvas_header"], (value) => {
-        let checkbox = document.getElementById('header_option');
+        let checkbox = document.getElementById("header_option");
         if (value.nvas_tag !== undefined) {
-            const option_list = document.querySelectorAll('option');
+            const option_list = document.querySelectorAll("option");
             option_list.forEach((option) => {
                 if (value.nvas_tag === option.value){
                     option.selected = true;
