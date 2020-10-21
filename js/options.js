@@ -9,21 +9,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function save_option() {
     let tag = document.getElementById("tag").value;
-    let header_option = document.getElementById("header_option").checked;
     chrome.storage.local.set({ "nvas_tag": tag }, () => {
-        chrome.storage.local.set({ "nvas_header": header_option }, () => {
-            let status = document.getElementById("status");
-            status.innerText = "保存しました";
-            setTimeout(function () {
-                status.innerText = " ";
-            }, 1500);
-        });
+        let status = document.getElementById("status");
+        status.innerText = "保存しました";
+        setTimeout(function () {
+            status.innerText = " ";
+        }, 1500);
     });   
 }
 
 function restore_option() {
-    chrome.storage.local.get(["nvas_tag", "nvas_header"], (value) => {
-        let checkbox = document.getElementById("header_option");
+    chrome.storage.local.get(["nvas_tag"], (value) => {
         if (value.nvas_tag !== undefined) {
             const option_list = document.querySelectorAll("option");
             option_list.forEach((option) => {
@@ -31,12 +27,6 @@ function restore_option() {
                     option.selected = true;
                 }
             });
-        }
-        
-        if (value.nvas_header !== undefined) {
-            checkbox.checked = value.nvas_header;
-        } else {
-            checkbox.checked = true;
         }
     });
 }
