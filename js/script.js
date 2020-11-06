@@ -12,16 +12,14 @@ chrome.storage.local.onChanged.addListener(result => {
     }
 });
 
-window.onload = function () {
+windowScroll(tag);
+const observer = new MutationObserver(() => {
     windowScroll(tag);
-    const observer = new MutationObserver(() => {
-        windowScroll(tag);
-    });
+});
 
-    let target = document.querySelector("title");
-    const config = { childList: true, characterData: true };
-    observer.observe(target, config);
-};
+let target = document.querySelector("title");
+const config = { childList: true, characterData: true };
+observer.observe(target, config);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message == "click") {
