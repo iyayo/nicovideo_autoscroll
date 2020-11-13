@@ -4,6 +4,8 @@ chrome.storage.local.get(["nvas_tag"], (result) => {
     if (result.nvas_tag !== undefined) {
         tag = result.nvas_tag;
     }
+
+    windowScroll(tag);
 });
 
 chrome.storage.local.onChanged.addListener(result => {
@@ -12,7 +14,6 @@ chrome.storage.local.onChanged.addListener(result => {
     }
 });
 
-windowScroll(tag);
 const observer = new MutationObserver(() => {
     windowScroll(tag);
 });
