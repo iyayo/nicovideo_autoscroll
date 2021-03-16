@@ -28,7 +28,8 @@
     "service_worker": "background.js"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "contextMenus"
   ],
   "options_ui": {
     "page": "html/options.html",
