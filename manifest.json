@@ -1,8 +1,8 @@
 {
   "name": "ニコニコ動画 自動スクロール",
-  "version": "1.4",
+  "version": "1.5",
   "manifest_version": 3,
-  "description": "動画ページを開いたとき、設定した位置に自動でスクロールする拡張機能",
+  "description": "動画ページを開いたときに、設定した位置に自動でスクロールする拡張機能です。",
   "icons" : {
     "16" : "icon/icon16.png",
     "32" : "icon/icon32.png",
