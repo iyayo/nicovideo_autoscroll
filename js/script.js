@@ -29,14 +29,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function windowScroll(tag) {
-    let rect = document.querySelector(tag).getBoundingClientRect();
-    let position = rect.top;
-    if (allCookies = document.cookie.split(';').some((item) => item.includes("common-header-fixed-disabled=1"))) {
-    } else {
-        let header = document.querySelector("#CommonHeader");
-        let header_size = window.getComputedStyle(header, null).getPropertyValue("height").slice(0, -2);
-        position = rect.top - header_size;
-    }
+    const interval = setInterval(() => {
+        const element = document.querySelector(tag);
 
-    window.scrollBy(0, position);
+        if (element === null) return;
+
+        element.scrollIntoView(true);
+
+        if (!(document.cookie.split(';').some((item) => item.includes("common-header-fixed-disabled=1")))) {
+            const header = document.querySelector("#CommonHeader");
+
+            window.scrollBy(0, -header.clientHeight);
+        };
+        
+        clearInterval(interval);
+    }, 500);
 }
