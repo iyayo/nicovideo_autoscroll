@@ -1,10 +1,11 @@
-const prop = {
-    id: "scroll",
-    title: "設定した位置にスクロール",
-    documentUrlPatterns: ["https://www.nicovideo.jp/watch/*"]
-}
-
-chrome.contextMenus.create(prop);
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.contextMenus.removeAll()
+    chrome.contextMenus.create({
+        id: "scroll",
+        title: "設定した位置にスクロール",
+        documentUrlPatterns: ["https://www.nicovideo.jp/watch/*"]
+    })
+});
 
 chrome.contextMenus.onClicked.addListener(() => {
     chrome.tabs.query({active: true, currentWindow: true}, tab => {
