@@ -2,7 +2,7 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.removeAll()
     chrome.contextMenus.create({
         id: "scroll",
-        title: "設定した位置にスクロール",
+        title: "スクロール",
         documentUrlPatterns: ["https://www.nicovideo.jp/watch/*"]
     })
 });
