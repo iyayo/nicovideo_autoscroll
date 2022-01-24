@@ -29,7 +29,7 @@ function windowScroll(tag) {
         element.scrollIntoView(true);
 
         if (!(document.cookie.split(';').some((item) => item.includes("common-header-fixed-disabled=1")))) {
-            const header = document.querySelector("#CommonHeader");
+            const header = document.querySelector(".common-header-cdesjj");
 
             window.scrollBy(0, -header.clientHeight);
         };
