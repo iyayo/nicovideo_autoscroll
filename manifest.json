@@ -14,7 +14,8 @@
       "16" : "icon/icon16.png",
       "32" : "icon/icon32.png"
     },
-    "default_title": "クリックでスクロール"
+    "default_popup": "html/popup.html",
+    "default_title": "ニコニコ動画 自動スクロール"
   },
   "content_scripts": [
     {
@@ -30,9 +31,5 @@
   "permissions": [
     "storage",
     "contextMenus"
-  ],
-  "options_ui": {
-    "page": "html/options.html",
-    "open_in_tab": false
-  }
+  ]
 }
